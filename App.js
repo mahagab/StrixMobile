@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
@@ -6,29 +6,30 @@ import Login from './Login'
 import Cadastro from './Cadastro'
 
 import Home from './Home'
-import Search from './Search'
-import List from './List'
-import Chatbot from './Chatbot'
-import Tendencies from './Tendencies'
-import Notification from './Notification'
 
+import {useFonts} from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import React, {useState,} from 'react';
 import {
   Text,
   StyleSheet,
   TouchableOpacity,
   Image,
-  Modal,
+  Modal, 
   SafeAreaView,
 } from 'react-native';
 import {ActionModal} from './src/ActionModal'
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
+console.disableYellowBox = true;
 
 
 export default function MyStack() {
+  let [fontsLoaded] = useFonts({
+    "DynaPuff-Bold": require('./src/assets/fonts/DynaPuff-Bold.ttf')
+   })
   return (
-      <NavigationContainer>
+      <NavigationContainer independent={true}> 
           <Stack.Navigator >
             <Stack.Screen name= 'App' component={App} options={{headerShown: false}}/>
             <Stack.Screen name= 'Login' component={Login} options={{headerShown: false}}/>
@@ -49,6 +50,10 @@ function App() {
   
   const navigation = useNavigation()
   
+let [fontsLoaded] = useFonts({
+ "DynaPuff-Bold": require('./src/assets/fonts/DynaPuff-Bold.ttf')
+})
+
   return (
       
       <SafeAreaView style={styles.container}>
@@ -57,7 +62,7 @@ function App() {
   
   
         <TouchableOpacity style={[styles.button]} onPress={() => setVisableModal(true)}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, {fontFamily: 'DynaPuff-Bold'}]}>
             Vamos Lá
           </Text>
         </TouchableOpacity>
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#f6f8f3',
     fontSize: 20,
-  fontFamily: 'DynaPuff-Bold'}
+  fontFamily: 'DynaPuff-Bold'
+}
   }
 )

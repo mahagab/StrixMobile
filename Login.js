@@ -1,42 +1,86 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import Home from './Home'
+
+import SignUp from './Cadastro'
+
+console.disableYellowBox = true;
+import { auth } from './firebase';
+
 import limg from "./img/tlogin.jpg"
 
-export default function Login() {
+console.disableYellowBox = true;
+
+const Login = props => {
+
   const navigation = useNavigation()
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Home")
+      }
+    })
 
-  return (
-    <SafeAreaView style={styles.container}>
+    return unsubscribe
+  }, [])
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+return (
+
+  <SafeAreaView style={styles.container}>
     
-        <Image source={limg}  style={styles.ilogin}>
-        </Image>
-        <Text style={styles.text}>LOGIN</Text>
+  <Image source={limg}  style={styles.ilogin}>
+  </Image>
+  <Text style={styles.text}>LOGIN</Text>
 
 
-      <TextInput placeholder="NickName" style={styles.txtinput} placeholderTextColor="black"/>
+  <TextInput placeholder="Email" style={styles.txtinput} placeholderTextColor="black"
+        defaultValue={email} onChangeText={(email) => setemail(email) }  />
 
-      <TextInput secureTextEntry={true} placeholder="Password" style={styles.senha} placeholderTextColor="black"/>
+      <TextInput secureTextEntry={true} placeholder="Password"
+       style={styles.senha} placeholderTextColor="black" defaultValue={password}
+       onChangeText={(password) => setpassword(password) } />
 
-      <TouchableOpacity style={[styles.button]} onPress={() => {}}>
-          <Text style={styles.btntxt}>
-            LOGIN
-          </Text>
-        </TouchableOpacity>
+<TouchableOpacity style={[styles.button]}  onPress={handleLogin}>
+    <Text style={styles.btntxt}>
+      LOGIN
+    </Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity onPress={() => {navigation.navigate('Cadastro')}}>
+<Text
+style={styles.loginText}>Não tem Cadastro? Sign Up</Text>
+</TouchableOpacity>
 
 
-   </SafeAreaView>
-  );
+
+</SafeAreaView>
+);
 }
+
+export default Login;
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +92,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-      marginVertical: 100,
+      marginVertical: 90,
       textAlign: 'center',
       borderRadius: 7,
       backgroundColor: '#739c8a',
@@ -94,6 +138,9 @@ const styles = StyleSheet.create({
       padding: 10,
       borderRadius: 25,
       color:'black',
+    },
+    loginText:{
+      color:'white',
     },
    
     }

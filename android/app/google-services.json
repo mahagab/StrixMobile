@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "430154722949",
+    "project_id": "strix-sprint",
+    "storage_bucket": "strix-sprint.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430154722949:android:525d67e1eb0037f5b503ec",
+        "android_client_info": {
+          "package_name": "br.com.strix.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430154722949-b9t1hdrk8r1ho501s0u2om4u1rf5tg68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA41VaCFVo7EAiutLlJxKES1RfbEizxh3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430154722949-b9t1hdrk8r1ho501s0u2om4u1rf5tg68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

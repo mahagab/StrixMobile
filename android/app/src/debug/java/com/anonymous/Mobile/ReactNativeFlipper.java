@@ -65,5 +65,6 @@ public class ReactNativeFlipper {
         client.addPlugin(new FrescoFlipperPlugin());
       }
     }
+    
   }
 }
